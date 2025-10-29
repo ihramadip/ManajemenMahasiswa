@@ -70,7 +70,7 @@
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">Waktu</th>
                                     @foreach(['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'] as $day)
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">{{ $day }}</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider" style="min-width: 180px;">{{ $day }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
@@ -101,7 +101,7 @@
 
                                                 @foreach($filteredJadwals as $jadwal)
                                                     <div class="mb-3 p-3 border border-[#40916C] rounded-lg bg-white shadow-sm hover:shadow-md transition">
-                                                        <p class="font-semibold text-[#40916C]">{{ $jadwal->mataKuliah->nama_mata_kuliah }}</p>
+                                                        <p class="font-semibold text-[#40916C]">{{ $jadwal->mataKuliah->nama_mk }} ({{ $jadwal->mataKuliah->kode_mk }})</p>
                                                         <p class="text-xs text-gray-600">Dosen: {{ $jadwal->dosen->name }}</p>
                                                         <p class="text-xs text-gray-600">Ruang: {{ $jadwal->ruangan }}</p>
                                                         <p class="text-xs text-gray-600">Semester: {{ $jadwal->semester }} ({{ $jadwal->tahun_akademik }})</p>

@@ -44,7 +44,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-gray-700">
                                             {{ date('H:i', strtotime($jadwal->waktu_mulai)) }} - {{ date('H:i', strtotime($jadwal->waktu_selesai)) }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ $jadwal->mataKuliah->nama_mata_kuliah }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ $jadwal->mataKuliah->nama_mk }} ({{ $jadwal->mataKuliah->kode_mk }})</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ $jadwal->dosen->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ $jadwal->ruangan }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ $jadwal->semester }}</td>

@@ -16,13 +16,22 @@ class KrsReviewController extends Controller
     public function index()
     {
         $dosen = Auth::user();
-        $krsSubmissions = Krs::where('dosen_pembimbing_id', $dosen->id)
-                                ->where('status', 'submitted')
-                                ->with('mahasiswa.user') // Eager load mahasiswa data
-                                ->latest()
-                                ->paginate(10);
 
-        return view('krs.review.index', compact('krsSubmissions'));
+        // Get pending KRS submissions
+        $pendingKrs = Krs::where('dosen_pembimbing_id', $dosen->id)
+                            ->where('status', 'submitted')
+                            ->with('mahasiswa.user') // Eager load mahasiswa data
+                            ->latest()
+                            ->paginate(10, ['*'], 'pending_page');
+
+        // Get approved KRS submissions
+        $approvedKrs = Krs::where('dosen_pembimbing_id', $dosen->id)
+                            ->where('status', 'approved')
+                            ->with('mahasiswa.user') // Eager load mahasiswa data
+                            ->latest()
+                            ->paginate(10, ['*'], 'approved_page');
+
+        return view('krs.review.index', compact('pendingKrs', 'approvedKrs'));
     }
 
     /**

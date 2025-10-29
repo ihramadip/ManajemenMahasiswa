@@ -11,6 +11,7 @@ use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminController; // Import AdminController
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index']);
@@ -49,6 +50,7 @@ Route::middleware('auth')->group(function () {
 
     // Grup Rute Khusus Dosen
     Route::middleware(['auth', 'role:dosen'])->group(function () {
+        Route::get('/dosen/dashboard', [App\Http\Controllers\DosenController::class, 'dashboard'])->name('dosen.dashboard');
         Route::get('/krs/review', [App\Http\Controllers\KrsReviewController::class, 'index'])->name('krs.review.index');
         Route::post('/krs/review/{krs}/approve', [App\Http\Controllers\KrsReviewController::class, 'approve'])->name('krs.review.approve');
         Route::post('/krs/review/{krs}/reject', [App\Http\Controllers\KrsReviewController::class, 'reject'])->name('krs.review.reject');
@@ -84,6 +86,7 @@ Route::middleware('auth')->group(function () {
 
     // Report Routes for Admin
     Route::middleware('role:admin')->group(function () {
+        Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard'); // Admin Dashboard
         Route::get('/reports/krs/{mahasiswaId}', [ReportController::class, 'generateKrs'])->name('admin.reports.krs');
         Route::get('/reports/khs/{mahasiswaId}', [ReportController::class, 'generateKhs'])->name('admin.reports.khs');
         Route::get('/reports/transkrip/{mahasiswaId}', [ReportController::class, 'generateTranskrip'])->name('admin.reports.transkrip');
@@ -103,6 +106,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Rute untuk fitur Manajemen Mahasiswa
     Route::resource('mahasiswa', App\Http\Controllers\MahasiswaController::class)->except(['show']);
+
+    // Rute untuk fitur Manajemen Dosen
+    Route::resource('dosen', App\Http\Controllers\DosenController::class)->except(['show']);
 
     // Rute untuk fitur Pengumuman
     Route::resource('pengumuman', PengumumanController::class);

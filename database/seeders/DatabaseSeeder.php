@@ -18,24 +18,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
             'role' => 'admin',
-            'password' => \Illuminate\Support\Facades\Hash::make('password'), // password: password
+            'password' => \Illuminate\Support\Facades\Hash::make('password'), // password: admin123ku
             'email_verified_at' => now(),
         ]);
 
-        // Buat User Dosen Contoh
-        \App\Models\User::create([
-            'name' => 'Budi Dosen',
-            'email' => 'dosen@example.com',
-            'role' => 'dosen',
-            'password' => \Illuminate\Support\Facades\Hash::make('password'), // password: password
-            'email_verified_at' => now(),
-        ]);
-    
-        // Buat 5 User Mahasiswa Contoh
-        \App\Models\User::factory(5)->create();
-    
-        // Panggil Seeder Mata Kuliah
+        // Panggil Seeder
         $this->call([
+            DosenSeeder::class,
             MataKuliahSeeder::class,
             JadwalSeeder::class,
         ]);

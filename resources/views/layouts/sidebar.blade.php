@@ -16,9 +16,7 @@
 
     <!-- Menu -->
     <nav class="flex flex-col space-y-4 text-[#B7E4C7] w-full">
-        @if (Auth::user()->role == 'admin')
-            {{-- SIDEBAR ADMIN --}}
-            <a href="{{ route('dashboard') }}" title="Dashboard" class="flex items-center py-3 rounded-md hover:bg-[#40916C] hover:text-white transition-colors duration-300" :class="isExpanded ? 'px-6' : 'justify-center'">
+            <a href="{{ route('admin.dashboard') }}" title="Dashboard" class="flex items-center py-3 rounded-md hover:bg-[#40916C] hover:text-white transition-colors duration-300 {{ request()->routeIs('admin.dashboard') ? 'bg-[#40916C] text-white' : '' }}" :class="isExpanded ? 'px-6' : 'justify-center'">
                 <i class="fas fa-home text-xl w-8 text-center"></i>
                 <span x-show="isExpanded" class="ml-4 font-semibold">Dashboard</span>
             </a>
@@ -29,6 +27,10 @@
             <a href="{{ route('mahasiswa.index') }}" title="Data Mahasiswa" class="flex items-center py-3 rounded-md hover:bg-[#40916C] hover:text-white transition-colors duration-300 {{ request()->routeIs('mahasiswa.*') ? 'bg-[#40916C] text-white' : '' }}" :class="isExpanded ? 'px-6' : 'justify-center'">
                 <i class="fas fa-user-graduate text-xl w-8 text-center"></i>
                 <span x-show="isExpanded" class="ml-4 font-semibold">Data Mahasiswa</span>
+            </a>
+            <a href="{{ route('dosen.index') }}" title="Data Dosen" class="flex items-center py-3 rounded-md hover:bg-[#40916C] hover:text-white transition-colors duration-300 {{ request()->routeIs('dosen.*') ? 'bg-[#40916C] text-white' : '' }}" :class="isExpanded ? 'px-6' : 'justify-center'">
+                <i class="fas fa-chalkboard-teacher text-xl w-8 text-center"></i>
+                <span x-show="isExpanded" class="ml-4 font-semibold">Data Dosen</span>
             </a>
             <a href="{{ route('pengumuman.index') }}" title="Manajemen Pengumuman" class="flex items-center py-3 rounded-md hover:bg-[#40916C] hover:text-white transition-colors duration-300 {{ request()->routeIs('pengumuman.*') ? 'bg-[#40916C] text-white' : '' }}" :class="isExpanded ? 'px-6' : 'justify-center'">
                 <i class="fas fa-bullhorn text-xl w-8 text-center"></i>
@@ -55,8 +57,8 @@
                 <span x-show="isExpanded" class="ml-4 font-semibold">Laporan Mahasiswa</span>
             </a>
 
-        @elseif(Auth::user()->role == 'dosen')
-            <a href="#" title="Dashboard" class="flex items-center py-3 rounded-md hover:bg-[#40916C] hover:text-white transition-colors duration-300" :class="isExpanded ? 'px-6' : 'justify-center'">
+        @if(Auth::user()->role == 'dosen')
+            <a href="{{ route('dosen.dashboard') }}" title="Dashboard" class="flex items-center py-3 rounded-md hover:bg-[#40916C] hover:text-white transition-colors duration-300 {{ request()->routeIs('dosen.dashboard') ? 'bg-[#40916C] text-white' : '' }}" :class="isExpanded ? 'px-6' : 'justify-center'">
                 <i class="fas fa-home text-xl w-8 text-center"></i>
                 <span x-show="isExpanded" class="ml-4 font-semibold">Dashboard</span>
             </a>

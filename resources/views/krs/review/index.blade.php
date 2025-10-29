@@ -30,7 +30,7 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @forelse ($krsSubmissions as $krs)
+                                @forelse ($pendingKrs as $krs)
                                     <tr class="hover:bg-[#d8f3dc] transition-colors duration-150">
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $krs->mahasiswa->user->name ?? 'N/A' }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $krs->mahasiswa->nim ?? 'N/A' }}</td>
@@ -57,7 +57,51 @@
                     </div>
 
                     <div class="mt-6">
-                        {{ $krsSubmissions->links() }}
+                        {{ $pendingKrs->links('pagination::tailwind', ['pageName' => 'pending_page']) }}
+                    </div>
+
+                    <!-- Approved KRS History Table -->
+                    <div class="mt-10">
+                        <h3 class="text-lg font-semibold mb-4">Riwayat KRS yang Telah Disetujui</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 rounded-lg shadow-md overflow-hidden">
+                                <thead class="bg-gray-600 text-white">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Nama Mahasiswa</th>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">NIM</th>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Tanggal Disetujui</th>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Total SKS</th>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @forelse ($approvedKrs as $krs)
+                                        <tr class="hover:bg-gray-100 transition-colors duration-150">
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $krs->mahasiswa->user->name ?? 'N/A' }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $krs->mahasiswa->nim ?? 'N/A' }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $krs->updated_at->format('d M Y') }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap">{{ $krs->total_sks }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                <a href="{{ route('krs.review.show', $krs) }}"
+                                                   class="text-gray-600 hover:text-gray-900 p-2 rounded-md hover:bg-gray-200"
+                                                   title="Lihat Detail">
+                                                    <i class="fas fa-eye mr-1"></i> Lihat Detail
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+                                                Belum ada KRS yang disetujui.
+                                            </td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="mt-6">
+                            {{ $approvedKrs->links('pagination::tailwind', ['pageName' => 'approved_page']) }}
+                        </div>
                     </div>
                 </div>
             </div>

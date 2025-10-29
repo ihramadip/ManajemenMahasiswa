@@ -53,12 +53,17 @@
                             @csrf
                             <input type="hidden" name="jadwal_id" value="{{ $selectedJadwalId }}">
 
-                            <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">
                                 Daftar Mahasiswa - {{ $selectedJadwal->mataKuliah->nama_mata_kuliah }} ({{ $selectedJadwal->hari }}, {{ $selectedJadwal->waktu_mulai }})
                             </h3>
 
+                            <!-- Search Input -->
+                            <div class="mb-4">
+                                <input type="text" id="searchInput" class="mt-1 block w-full md:w-1/2 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-[#40916C] focus:border-[#40916C] sm:text-sm rounded-md" placeholder="Cari berdasarkan NIM atau Nama Mahasiswa...">
+                            </div>
+
                             <div class="overflow-x-auto rounded-lg shadow">
-                                <table class="min-w-full divide-y divide-gray-300 font-sans text-sm">
+                                <table class="min-w-full divide-y divide-gray-300 font-sans text-sm" id="mahasiswaTable">
                                     <thead class="bg-[#40916C]">
                                         <tr>
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-white uppercase tracking-wider">No</th>
@@ -69,10 +74,10 @@
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         @foreach($krsDetails as $index => $detail)
-                                            <tr class="{{ $index % 2 == 0 ? 'bg-gray-50' : 'bg-white' }} hover:bg-green-50 transition">
+                                            <tr class="student-row {{ $index % 2 == 0 ? 'bg-gray-50' : 'bg-white' }} hover:bg-green-50 transition">
                                                 <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{{ $index + 1 }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ $detail->krs->mahasiswa->nim ?? 'N/A' }}</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-gray-700">{{ $detail->krs->mahasiswa->nama_lengkap ?? 'N/A' }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-gray-700 nim">{{ $detail->krs->mahasiswa->nim ?? 'N/A' }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-gray-700 student-name">{{ $detail->krs->mahasiswa->nama_lengkap ?? 'N/A' }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <input type="hidden" name="nilai[{{ $index }}][krs_detail_id]" value="{{ $detail->id }}">
                                                     <select name="nilai[{{ $index }}][nilai]" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-[#40916C] focus:border-[#40916C] sm:text-sm rounded-md">
@@ -96,6 +101,29 @@
                                 </button>
                             </div>
                         </form>
+
+                        <script>
+                            document.getElementById('searchInput').addEventListener('keyup', function() {
+                                let filter = this.value.toLowerCase();
+                                let table = document.getElementById('mahasiswaTable');
+                                let rows = table.getElementsByClassName('student-row');
+
+                                for (let i = 0; i < rows.length; i++) {
+                                    let nimCell = rows[i].getElementsByClassName('nim')[0];
+                                    let nameCell = rows[i].getElementsByClassName('student-name')[0];
+                                    if (nimCell || nameCell) {
+                                        let nimText = nimCell.textContent || nimCell.innerText;
+                                        let nameText = nameCell.textContent || nameCell.innerText;
+                                        if (nimText.toLowerCase().indexOf(filter) > -1 || nameText.toLowerCase().indexOf(filter) > -1) {
+                                            rows[i].style.display = "";
+                                        } else {
+                                            rows[i].style.display = "none";
+                                        }
+                                    }
+                                }
+                            });
+                        </script>
+
                     @elseif($selectedJadwalId)
                         <div class="text-center py-8">
                             <p class="text-gray-500">Tidak ada mahasiswa yang terdaftar pada jadwal ini.</p>
