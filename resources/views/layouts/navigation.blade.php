@@ -2,23 +2,10 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16 items-center">
 
-            <!-- Left side (Logo replaced with simple Home icon) -->
-            <div class="flex items-center space-x-6">
-                <!-- Home Icon -->
-                <a href="{{ route('dashboard') }}" class="text-[#081C15] hover:text-[#40916C]" title="Home">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M3 9.75L12 3l9 6.75V21a.75.75 0 01-.75.75H3.75A.75.75 0 013 21V9.75z" />
-                        <path d="M9 22.5V12h6v10.5" />
-                    </svg>
-                </a>
-
-                <!-- Calendar Icon -->
-                <a href="{{ route('jadwal.index') }}" class="text-[#081C15] hover:text-[#40916C]" title="Jadwal Kuliah">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <rect width="18" height="18" x="3" y="4" rx="2" ry="2"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 2v4M8 2v4M3 10h18" />
-                    </svg>
+            <!-- Left side (Logo) -->
+            <div class="flex items-center space-x-6 mt-2">
+                <a href="{{ route('dashboard') }}" class="flex-shrink-0">
+                    <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="block h-10 w-auto fill-current text-gray-800" />
                 </a>
             </div>
 
